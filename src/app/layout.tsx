@@ -14,8 +14,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "QR Code Generator",
-  description:
-    "A simple and fast qr code generator without ads and distractions",
+  description: "Generate QR codes from URLs and text",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
