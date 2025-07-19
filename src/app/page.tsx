@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 import { GiHamburgerMenu } from "react-icons/gi";
-import Popup from "../../components/popup";
+import Popup from "./popup";
 
 export default function Home(){
   const [link, setLink] = useState<string>("");

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
@@ -26,11 +27,15 @@ const Popup: React.FC<PopupProps> = ({
     setShowPopup(false);
   };
 
-  const handleInnerColorChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInnerColorChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setInnerColor(e.target.value);
   };
 
-  const handleOuterColorChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleOuterColorChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setOuterColor(e.target.value);
   };
 
@@ -104,7 +109,7 @@ const Popup: React.FC<PopupProps> = ({
 
 export default Popup;
 
-const Row: React.FC<RowProps> = ({ children })=> {
+const Row: React.FC<RowProps> = ({ children }) => {
   return (
     <div className="rounded-2xl flex bg-white/20 overflow-hidden mx-8 border-neutral-200 border">
       {children}
