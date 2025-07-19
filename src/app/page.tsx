@@ -1,11 +1,17 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import QRCode from "qrcode";
+import { GiHamburgerMenu } from "react-icons/gi";
+import Popup from "../../components/Popup";
 
 export default function Home() {
   const [link, setLink] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [innerColor, setInnerColor] = useState("#000000");
+  const [outerColor, setOuterColor] = useState("#ffffff");
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleClick = async (e: React.MouseEvent) => {
     if (!link.trim()) return;
@@ -15,6 +21,10 @@ export default function Home() {
       const qrCodeDataUrl = await QRCode.toDataURL(link, {
         width: 256,
         margin: 2,
+        color: {
+          dark: innerColor,
+          light: outerColor,
+        },
       });
       setQrCodeUrl(qrCodeDataUrl);
     } catch (error) {
@@ -22,6 +32,10 @@ export default function Home() {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleOptionsClick = (e: React.MouseEvent) => {
+    setShowPopup(true);
   };
 
   const handleDownload = () => {
@@ -32,6 +46,10 @@ export default function Home() {
     link.href = qrCodeUrl;
     link.click();
   };
+
+  useEffect(() => {
+    handleClick(null);
+  }, [showPopup]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4 sm:p-8">
@@ -51,13 +69,22 @@ export default function Home() {
             onChange={(e) => setLink(e.target.value)}
             placeholder="https://example.com"
           />
-          <button
-            className="w-full px-4 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
-            onClick={handleClick}
-            disabled={!link.trim() || isGenerating}
-          >
-            {isGenerating ? "Generating..." : "Generate QR Code"}
-          </button>
+          <div className="flex gap-2">
+            <button
+              className="flex-1 px-4 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-base"
+              onClick={handleClick}
+              disabled={!link.trim() || isGenerating}
+            >
+              {isGenerating ? "Generating..." : "Generate QR Code"}
+            </button>
+            <button
+              className="px-2 text-white bg-gray-700 rounded-lg hover:bg-gray-800 border border-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              disabled={!link.trim() || isGenerating}
+              onClick={handleOptionsClick}
+            >
+              <GiHamburgerMenu className="" />
+            </button>
+          </div>
         </div>
 
         {qrCodeUrl && (
@@ -78,6 +105,14 @@ export default function Home() {
           </div>
         )}
       </div>
+      <Popup
+        innerColor={innerColor}
+        setInnerColor={setInnerColor}
+        outerColor={outerColor}
+        setOuterColor={setOuterColor}
+        showPopup={showPopup}
+        setShowPopup={setShowPopup}
+      />
     </div>
   );
 }
