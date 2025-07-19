@@ -1,7 +1,20 @@
 import React from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const Popup = ({
+interface PopupProps {
+  innerColor?: string;
+  setInnerColor: React.Dispatch<React.SetStateAction<string>>;
+  outerColor?: string;
+  setOuterColor: React.Dispatch<React.SetStateAction<string>>;
+  showPopup: boolean;
+  setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface RowProps {
+  children: React.ReactNode;
+}
+
+const Popup: React.FC<PopupProps> = ({
   innerColor = "#000000",
   setInnerColor,
   outerColor = "#ffffff",
@@ -9,6 +22,22 @@ const Popup = ({
   showPopup,
   setShowPopup,
 }) => {
+  const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    setShowPopup(false);
+  };
+
+  const handleInnerColorChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setInnerColor(e.target.value);
+  };
+
+  const handleOuterColorChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setOuterColor(e.target.value);
+  };
+
+  const handleApplyClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    setShowPopup(false);
+  };
+
   return (
     <div
       className={`absolute top-0 left-0 flex justify-center items-center w-screen h-screen ${
@@ -20,9 +49,7 @@ const Popup = ({
       >
         <button
           className="flex justify-end text-red-600"
-          onClick={(e) => {
-            setShowPopup(false);
-          }}
+          onClick={handleCloseClick}
         >
           <IoIosCloseCircleOutline className="text-2xl absolute right-2 top-2 hover:text-white transition" />
         </button>
@@ -43,9 +70,7 @@ const Popup = ({
                 name="color"
                 value={innerColor}
                 className="w-full h-full scale-125"
-                onChange={(e) => {
-                  setInnerColor(e.target.value);
-                }}
+                onChange={handleInnerColorChange}
               />
             </div>
           </Row>
@@ -59,9 +84,7 @@ const Popup = ({
                 name="color"
                 className="h-full w-full scale-125"
                 value={outerColor}
-                onChange={(e) => {
-                  setOuterColor(e.target.value);
-                }}
+                onChange={handleOuterColorChange}
               />
             </div>
           </Row>
@@ -69,9 +92,7 @@ const Popup = ({
         <div className="flex justify-center">
           <button
             className="bg-green-600 px-8 py-2 rounded-full w-fit my-4"
-            onClick={(e) => {
-              setShowPopup(false);
-            }}
+            onClick={handleApplyClick}
           >
             Apply
           </button>
@@ -83,7 +104,7 @@ const Popup = ({
 
 export default Popup;
 
-const Row = ({ children }) => {
+const Row: React.FC<RowProps> = ({ children })=> {
   return (
     <div className="rounded-2xl flex bg-white/20 overflow-hidden mx-8 border-neutral-200 border">
       {children}

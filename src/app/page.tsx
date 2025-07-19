@@ -3,22 +3,24 @@
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 import { GiHamburgerMenu } from "react-icons/gi";
-import Popup from "../../components/Popup";
+import Popup from "../../components/popup";
 
-export default function Home() {
-  const [link, setLink] = useState("");
-  const [qrCodeUrl, setQrCodeUrl] = useState("");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [innerColor, setInnerColor] = useState("#000000");
-  const [outerColor, setOuterColor] = useState("#ffffff");
-  const [showPopup, setShowPopup] = useState(false);
+export default function Home(){
+  const [link, setLink] = useState<string>("");
+  const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [innerColor, setInnerColor] = useState<string>("#000000");
+  const [outerColor, setOuterColor] = useState<string>("#ffffff");
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
-  const handleClick = async (e: React.MouseEvent) => {
+  const handleClick = async (
+    e: React.MouseEvent<HTMLButtonElement> | null
+  ): Promise<void> => {
     if (!link.trim()) return;
 
     setIsGenerating(true);
     try {
-      const qrCodeDataUrl = await QRCode.toDataURL(link, {
+      const qrCodeDataUrl: string = await QRCode.toDataURL(link, {
         width: 256,
         margin: 2,
         color: {
@@ -34,20 +36,20 @@ export default function Home() {
     }
   };
 
-  const handleOptionsClick = (e: React.MouseEvent) => {
+  const handleOptionsClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     setShowPopup(true);
   };
 
-  const handleDownload = () => {
+  const handleDownload = (): void => {
     if (!qrCodeUrl) return;
 
-    const link = document.createElement("a");
+    const link: HTMLAnchorElement = document.createElement("a");
     link.download = "qrcode.png";
     link.href = qrCodeUrl;
     link.click();
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     handleClick(null);
   }, [showPopup]);
 
