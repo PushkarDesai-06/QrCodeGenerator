@@ -61,10 +61,8 @@ const Popup: React.FC<PopupProps> = ({
         <div className="text-center text-2xl font-black text-blue-100 mt-2">
           OPTIONS
         </div>
-        <p className="mx-4 px-4 py-2 font-semibold text-xl bg-red-500/20 text-red-300 rounded-md my-4">
-          Colors
-        </p>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 bg-blue-200/20 text-white/75 border border-white/20 rounded-md mt-4 pb-8 pt-4 mx-4">
+          <p className="mx-4 px-4 font-semibold text-xl ">Colors</p>
           <Row>
             <label htmlFor="color" className="flex-1/2 py-2 px-4">
               Inner Color
@@ -96,7 +94,7 @@ const Popup: React.FC<PopupProps> = ({
         </div>
         <div className="flex justify-center">
           <button
-            className="bg-green-600 px-8 py-2 rounded-full w-fit my-4"
+            className=" w-52 py-2 rounded-full my-4 border border-white/20 bg-white/20 font-semibold hover:scale-105 transition cursor-pointer"
             onClick={handleApplyClick}
           >
             Apply
